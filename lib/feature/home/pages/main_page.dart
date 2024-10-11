@@ -18,9 +18,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List<Widget> listScreens = [
     // Add your screens here
-    const Center(
-      child: Text('Home Page 1'),
-    ),
+    const HabitListPage(),
     const Center(
       child: Text('Notification Page 2'),
     ),
@@ -52,19 +50,11 @@ class _MainPageState extends State<MainPage> {
           }
         },
         builder: (context, state) => AppMainWidget(
-          floatingActionButton: _buildFAB(),
           body: listScreens[currentIndex],
           appBarWidget: _buildAppBar(context),
           bottomNavigationBar: _buildBottomNav(),
         ),
       ),
-    );
-  }
-
-  FloatingActionButton _buildFAB() {
-    return FloatingActionButton(
-      onPressed: () {},
-      child: const Icon(Icons.add),
     );
   }
 
@@ -85,10 +75,17 @@ class _MainPageState extends State<MainPage> {
     return AppBarWidget(
       text: 'Habit Garden',
       goBackEnabled: false,
+      leadingWidget: AppIconButtonWidget(
+        iconColor: Colors.white,
+        size: 30,
+        icon: Icons.person_4,
+        onPressed: () {},
+      ),
       actions: [
         AppIconButtonWidget(
           iconColor: Colors.white,
           icon: Icons.logout,
+          size: 30,
           onPressed: () => _showDialogConfirmSignOut(context),
         ),
       ],

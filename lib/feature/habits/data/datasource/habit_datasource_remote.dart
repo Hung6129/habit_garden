@@ -29,11 +29,13 @@ class HabitDatasourceRemoteImpl implements HabitDatasourceRemote {
         method: HTTPMethod.get,
       ));
       if (res is AppResultSuccess<AppResponse>) {
-        final List<HabitModel> habits = (res.netData?.data as List<HabitModel>)
-            .map((e) => HabitModel.fromJson(e.toJson()))
-            .toList();
-        _logger.d('getAllHabitsByUserId: $habits');
-        return AppResult.success(habits);
+        final List<HabitModel> listData = [];
+        final List<dynamic> list = res.netData?.data;
+        // adding data to list
+        for (var element in list) {
+          listData.add(HabitModel.fromJson(element));
+        }
+        return AppResult.success(listData);
       }
       if (res is AppResultFailure) {
         _logger
@@ -41,8 +43,8 @@ class HabitDatasourceRemoteImpl implements HabitDatasourceRemote {
         return AppResult.failure((res as AppResultFailure).exception);
       }
       return AppResult.exceptionEmpty();
-    } catch (e) {
-      _logger.e('getAllHabitsByUserId: $e');
+    } catch (e, str) {
+      _logger.e('getAllHabitsByUserId: $e $str');
       return AppResult.exceptionEmpty();
     }
   }

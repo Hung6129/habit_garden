@@ -1,9 +1,34 @@
-import 'package:equatable/equatable.dart';
+import 'package:habit_garden/feature/habits/domain/entities/habit_entity.dart';
 
-enum HabitStatus { loading, loaded, error }
+enum GetAllHabitByUserIdEnum { initial, loading, loaded, error }
 
-class HabitState extends Equatable {
-  @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+sealed class HabitState {
+  const HabitState();
+}
+
+final class HabitInitial extends HabitState {
+  const HabitInitial();
+}
+
+final class GetAllHabitByUserIdState extends HabitState {
+  final GetAllHabitByUserIdEnum status;
+  final List<HabitEntity> habits;
+  final String errorMesssage;
+  GetAllHabitByUserIdState({
+    this.status = GetAllHabitByUserIdEnum.initial,
+    this.habits = const [],
+    this.errorMesssage = '',
+  });
+
+  GetAllHabitByUserIdState copyWith({
+    GetAllHabitByUserIdEnum? status,
+    List<HabitEntity>? habits,
+    String? errorMesssage,
+  }) {
+    return GetAllHabitByUserIdState(
+      status: status ?? this.status,
+      habits: habits ?? this.habits,
+      errorMesssage: errorMesssage ?? this.errorMesssage,
+    );
+  }
 }
