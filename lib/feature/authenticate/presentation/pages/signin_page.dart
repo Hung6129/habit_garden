@@ -28,7 +28,7 @@ class _SignInPageState extends State<SignInPage> {
       child: BlocConsumer<AuthenticateBloc, AuthenticateState>(
         // BlocConsumer listens to state changes and rebuilds the UI accordingly
         // A cleaner way to handle listener is to shove it into a static method in the bloc =))
-        listener: AuthenticateBloc.onListenerHandleSigninState,
+        listener: _blocListener,
         builder: (context, state) => AppMainWidget(
           body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -40,6 +40,24 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
+  }
+
+  void _blocListener(context, state) {
+    if (state.status == AuthenticateStatus.loading) {
+      AppFullScreenLoadingIndicator.show();
+    }
+    if (state.status == AuthenticateStatus.success) {
+      AppFullScreenLoadingIndicator.dismiss();
+      MainPage.openFromAuth(context);
+    }
+    if (state.status == AuthenticateStatus.failure) {
+      AppFullScreenLoadingIndicator.dismiss();
+      DialogUtil.onDialogError(
+        context,
+        title: 'Error',
+        subText: state.message ?? 'Sign in failed',
+      );
+    }
   }
 
   FormBuilder _buildSignInForm(

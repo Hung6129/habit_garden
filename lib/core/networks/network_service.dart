@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:habit_garden/core/data/local/app_pref_key.dart';
+import 'package:habit_garden/core/data/local/app_shared_pref.dart';
 import 'package:habit_garden/core/networks/api_provider.dart';
+import 'package:habit_garden/core/services/injection_service.dart';
 import 'package:logger/logger.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'client_request.dart';
@@ -38,10 +41,13 @@ abstract class NetworkService {
 }
 
 class NetworkServiceImpl extends NetworkService {
-  final Dio _dio = NetworkService.newDio();
+  late final Dio _dio;
   final Logger _logger = Logger(printer: PrettyPrinter(methodCount: 0));
 
-  NetworkServiceImpl();
+  NetworkServiceImpl() {
+    _dio = NetworkService.newDio();
+    _dio.interceptors.add(NetworkInterceptorWrapper(diO: _dio));
+  }
 
   @override
   Future<AppResult<AppResponse>> request({

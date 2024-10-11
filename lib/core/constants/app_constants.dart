@@ -5,6 +5,9 @@ class AppUIConstants {
 
   static double marginBase = 4;
 
+  static double minPadding = 4;
+  static double mainHorizontalMargin = 16;
+
   static double defaultPadding = 16;
 
   static double majorScalePadding(double scale) => scale * paddingBase;

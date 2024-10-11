@@ -5,23 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get/get.dart';
 import 'package:habit_garden/core/services/injection_service.dart';
 import 'package:habit_garden/share/widgets/loading/app_loading_indicator.dart';
 import 'package:habit_garden/share/themes/app_theme.dart';
 import 'package:month_year_picker/month_year_picker.dart';
-
-import 'core/networks/network_service.dart';
 import 'core/services/state_observer.dart';
 import 'feature/walkthrough/bloc/walkthrough_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   InjectionService.registerServices();
-  Get.put<NetworkService>(NetworkServiceImpl());
   Bloc.observer = StateBlocObserver();
   HttpOverrides.global = MyHttpOverrides();
-
   runApp(const MyApp());
 }
 
@@ -32,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Đặt màn hình ở chế độ dọc mặc định trên mọi thiết bị
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       builder: AppFullScreenLoadingIndicator.init(

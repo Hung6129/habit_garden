@@ -23,6 +23,7 @@ class AppIconButtonWidget extends StatelessWidget {
             width: 56,
             height: 56,
             child: IconButton(
+              iconSize: size ?? 24,
               color: iconColor ?? context.theme.colorScheme.background,
               icon: Icon(icon),
               onPressed: () => onPressed.call(),
@@ -30,6 +31,7 @@ class AppIconButtonWidget extends StatelessWidget {
           )
         : IconButton(
             color: iconColor ?? context.theme.iconTheme.color,
+            iconSize: size ?? 24,
             icon: Icon(
               icon,
             ),

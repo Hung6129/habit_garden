@@ -67,25 +67,6 @@ class AuthenticateBloc extends Bloc<AuthenticateEvent, AuthenticateState> {
     }
   }
 
-  static onListenerHandleSigninState(
-      BuildContext context, AuthenticateState state) {
-    if (state.status == AuthenticateStatus.loading) {
-      AppFullScreenLoadingIndicator.show();
-    }
-    if (state.status == AuthenticateStatus.success) {
-      AppFullScreenLoadingIndicator.dismiss();
-      MainPage.openFromAuth(context);
-    }
-    if (state.status == AuthenticateStatus.failure) {
-      AppFullScreenLoadingIndicator.dismiss();
-      DialogUtil.onDialogError(
-        context,
-        title: 'Error',
-        subText: state.message ?? 'Sign in failed',
-      );
-    }
-  }
-
   saveUserToLocal(UserEntity user, bool isSavePassword) async {
     _logger.d('Save user info to local storage');
     await iS<AppSharedPref>().setValue(AppPrefKey.userName, user.username);
@@ -117,38 +98,6 @@ class AuthenticateBloc extends Bloc<AuthenticateEvent, AuthenticateState> {
         AuthenticateState.failure(
           '${(res as AppResultFailure).exception?.message}',
         ),
-      );
-    }
-  }
-
-  static onListenerHandleSignupState(
-      BuildContext context, AuthenticateState state) {
-    if (state.status == AuthenticateStatus.loading) {
-      AppFullScreenLoadingIndicator.show();
-    }
-    if (state.status == AuthenticateStatus.success) {
-      AppFullScreenLoadingIndicator.dismiss();
-      DialogUtil.onDialogSuccess(
-        context,
-        title: 'Success',
-        subText: 'Your account has been created successfully',
-        positiveText: 'Go back to sign in',
-        negativeText: 'Close',
-        onPositiveFunc: () {
-          Navigator.of(context).pop();
-          Navigator.of(context).pop();
-        },
-        onNegativeFunc: () {
-          Navigator.of(context).pop();
-        },
-      );
-    }
-    if (state.status == AuthenticateStatus.failure) {
-      AppFullScreenLoadingIndicator.dismiss();
-      DialogUtil.onDialogError(
-        context,
-        title: 'Error',
-        subText: state.message ?? 'Sign up failed',
       );
     }
   }

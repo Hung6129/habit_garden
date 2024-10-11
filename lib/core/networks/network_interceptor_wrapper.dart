@@ -53,8 +53,8 @@ class NetworkInterceptorWrapper extends QueuedInterceptorsWrapper {
   }
 
   Future<Map<String, String>> _headerToken() async {
-    // final token = Global.storageServices.getString(AppStorage.userTokenKey);
-    const token = '';
+    final token = await iS<AppSharedPref>().getValue(AppPrefKey.token, '');
+    _logger.d('Token: $token');
     final tokenHeader =
         token.isEmpty ? _basicToken : {'Authorization': 'Bearer $token'};
     return {
