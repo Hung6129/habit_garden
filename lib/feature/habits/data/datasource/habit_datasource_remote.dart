@@ -1,3 +1,4 @@
+import 'package:habit_garden/core/data/params/habit_param.dart';
 import 'package:habit_garden/core/networks/api_provider.dart';
 import 'package:habit_garden/core/networks/client_request.dart';
 import 'package:habit_garden/core/networks/nets/app_response.dart';
@@ -9,6 +10,10 @@ import 'package:logger/logger.dart';
 abstract class HabitDatasourceRemote {
   Future<AppResult<List<HabitModel>>> getAllHabitsByUserId({
     required String userId,
+  });
+
+  Future<AppResult<HabitModel>> createNewHabit({
+    required HabitCreateParam param,
   });
 }
 
@@ -45,6 +50,30 @@ class HabitDatasourceRemoteImpl implements HabitDatasourceRemote {
       return AppResult.exceptionEmpty();
     } catch (e, str) {
       _logger.e('getAllHabitsByUserId: $e $str');
+      return AppResult.exceptionEmpty();
+    }
+  }
+
+  @override
+  Future<AppResult<HabitModel>> createNewHabit(
+      {required HabitCreateParam param}) async {
+    try {
+      final res = await networkService.request(
+          clientRequest: ClientRequest(
+        url: ApiProvider.createNewHabit,
+        method: HTTPMethod.post,
+        body: param.toMap(),
+      ));
+      if (res is AppResultSuccess<AppResponse>) {
+        return AppResult.success(HabitModel.fromJson(res.netData?.data));
+      }
+      if (res is AppResultFailure) {
+        _logger.e('createNewHabit: ${(res as AppResultFailure).exception}');
+        return AppResult.failure((res as AppResultFailure).exception);
+      }
+      return AppResult.exceptionEmpty();
+    } catch (e, str) {
+      _logger.e('createNewHabit: $e $str');
       return AppResult.exceptionEmpty();
     }
   }

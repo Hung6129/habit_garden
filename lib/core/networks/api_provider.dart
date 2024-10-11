@@ -8,4 +8,6 @@ class ApiProvider {
 
   // Habit
   static String getAllHabitsByUserId(String userId) => "/habit/all/$userId";
+  static String createNewHabit = '/habit/create';
+  // End Habit
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:duration_picker/localization/localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         DefaultCupertinoLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         MonthYearPickerLocalizations.delegate,
+        DurationPickerLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('vi', 'vi_VN'),
