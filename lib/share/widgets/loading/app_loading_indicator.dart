@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
-import 'package:get/get.dart';
-
 class AppFullScreenLoadingIndicator {
   static TransitionBuilder init({
     TransitionBuilder? builder,
@@ -18,9 +16,9 @@ class AppFullScreenLoadingIndicator {
       ..maskType = EasyLoadingMaskType.custom
       ..indicatorSize = 48.0
       ..radius = 10.0
-      ..backgroundColor = context.theme.colorScheme.surface
-      ..indicatorColor = context.theme.primaryColor
-      ..progressColor = context.theme.primaryColor.withOpacity(0.6)
+      ..backgroundColor = Theme.of(context).colorScheme.surface
+      ..indicatorColor = Theme.of(context).primaryColor
+      ..progressColor = Theme.of(context).primaryColor.withOpacity(0.6)
       ..textColor = Colors.black
       ..maskColor = Colors.black.withOpacity(0.4)
       ..userInteractions = false

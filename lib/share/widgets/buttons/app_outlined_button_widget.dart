@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/share/widgets/texts/app_text_widget.dart';
 import 'package:habit_garden/share/themes/app_theme.dart';
@@ -38,7 +38,7 @@ class AppOutlinedButtonWidget extends StatelessWidget {
             color: borderColor ??
                 (isEnable
                     ? AppColors.get().neutralColor[30]!
-                    : context.theme.disabledColor),
+                    : Theme.of(context).disabledColor),
           ),
         ),
         child: Row(
@@ -53,11 +53,11 @@ class AppOutlinedButtonWidget extends StatelessWidget {
             AppTextWidget(
               text,
               textStyle: textStyle ??
-                  context.textTheme.titleSmall?.copyWith(
-                    color: isEnable
-                        ? context.theme.primaryColor
-                        : AppColors.get().neutralColor[40]!,
-                  ),
+                  Theme.of(context).textTheme.titleSmall?.copyWith(
+                        color: isEnable
+                            ? Theme.of(context).primaryColor
+                            : AppColors.get().neutralColor[40]!,
+                      ),
             ),
           ],
         ),

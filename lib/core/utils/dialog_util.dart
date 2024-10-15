@@ -24,6 +24,7 @@ class DialogUtil {
   }) {
     return showDialog<void>(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
         return AppDialogCreateWidget(
           title: title,

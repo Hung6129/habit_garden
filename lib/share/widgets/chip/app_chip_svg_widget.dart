@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AppChipSvgWidget extends StatelessWidget {
   const AppChipSvgWidget({
-    Key? key,
+    super.key,
     required this.icon,
     this.isDot = false,
     this.onTap,
     this.borderRadius,
     this.border,
-  }) : super(key: key);
+  });
 
   final Widget icon;
   final Function()? onTap;
@@ -27,7 +26,7 @@ class AppChipSvgWidget extends StatelessWidget {
             width: 40,
             height: 32,
             decoration: BoxDecoration(
-              color: context.theme.colorScheme.surface,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: borderRadius ?? BorderRadius.circular(8),
               border: border,
             ),
@@ -41,7 +40,7 @@ class AppChipSvgWidget extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: context.theme.colorScheme.error,
+                  color: Theme.of(context).colorScheme.error,
                 ),
                 width: 8,
                 height: 8,

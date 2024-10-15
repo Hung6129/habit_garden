@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/share/widgets/app_icon_widget.dart';
 import 'package:habit_garden/share/widgets/date/lib/app_date_picker_dialog.dart';
@@ -48,16 +47,18 @@ class AppDateRangePickerWidget extends StatelessWidget {
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                textStyle: context.textTheme.bodySmall?.copyWith(
-                  color: AppColors.get().neutralColor[60],
-                ),
+                textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.get().neutralColor[60],
+                    ),
               ),
             ),
             if (isRequired && !isViewTextOnly) const SizedBox(width: 2),
             if (isRequired && !isViewTextOnly)
               AppTextWidget(
                 '*',
-                textStyle: context.textTheme.bodySmall
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .bodySmall
                     ?.copyWith(color: AppColors.get().errorColor),
               )
           ],
@@ -82,9 +83,11 @@ class AppDateRangePickerWidget extends StatelessWidget {
                   child: AppTextWidget(
                     displayRangeDate(),
                     textStyle: (initFirstDate != null || initLastDate != null)
-                        ? context.textTheme.bodyMedium
-                        : context.textTheme.bodyMedium
-                            ?.copyWith(color: context.theme.disabledColor),
+                        ? Theme.of(context).textTheme.bodyMedium
+                        : Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Theme.of(context).disabledColor),
                   ),
                 )
               : InputDecorator(
@@ -100,7 +103,7 @@ class AppDateRangePickerWidget extends StatelessWidget {
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide:
-                            BorderSide(color: context.theme.primaryColor),
+                            BorderSide(color: Theme.of(context).primaryColor),
                       ),
                       contentPadding:
                           const EdgeInsets.only(top: 10, bottom: 12),
@@ -112,9 +115,11 @@ class AppDateRangePickerWidget extends StatelessWidget {
                   child: AppTextWidget(
                     displayRangeDate(),
                     textStyle: (initFirstDate != null || initLastDate != null)
-                        ? context.textTheme.bodyMedium
-                        : context.textTheme.bodyMedium
-                            ?.copyWith(color: context.theme.hintColor),
+                        ? Theme.of(context).textTheme.bodyMedium
+                        : Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Theme.of(context).hintColor),
                   ),
                 ),
         ),

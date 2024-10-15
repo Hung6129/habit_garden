@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AppIconButtonWidget extends StatelessWidget {
   const AppIconButtonWidget(
@@ -24,13 +23,13 @@ class AppIconButtonWidget extends StatelessWidget {
             height: 56,
             child: IconButton(
               iconSize: size ?? 24,
-              color: iconColor ?? context.theme.colorScheme.background,
+              color: iconColor ?? Theme.of(context).colorScheme.background,
               icon: Icon(icon),
               onPressed: () => onPressed.call(),
             ),
           )
         : IconButton(
-            color: iconColor ?? context.theme.iconTheme.color,
+            color: iconColor ?? Theme.of(context).iconTheme.color,
             iconSize: size ?? 24,
             icon: Icon(
               icon,

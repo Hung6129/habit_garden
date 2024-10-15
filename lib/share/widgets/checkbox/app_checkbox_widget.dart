@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:habit_garden/share/themes/app_theme.dart';
 
 class AppCheckBoxWidget extends StatelessWidget {
@@ -23,7 +23,7 @@ class AppCheckBoxWidget extends StatelessWidget {
         onChanged: (value) => onChanged?.call(value ?? false),
         fillColor: isReadOnly
             ? WidgetStateProperty.all(
-                context.theme.appColor.neutralColor[40],
+                Theme.of(context).appColor.neutralColor[40],
               )
             : null,
       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AppIconWidget extends StatelessWidget {
   const AppIconWidget(
@@ -26,11 +25,12 @@ class AppIconWidget extends StatelessWidget {
       height: bgSize,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: bgColor ?? context.theme.scaffoldBackgroundColor,
+        color: bgColor ?? Theme.of(context).scaffoldBackgroundColor,
         shape: BoxShape.circle,
       ),
       child: Icon(icon,
-          size: iconSize, color: iconColor ?? context.theme.iconTheme.color),
+          size: iconSize,
+          color: iconColor ?? Theme.of(context).iconTheme.color),
     );
   }
 }

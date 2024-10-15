@@ -23,21 +23,21 @@ class AppServicesImpl extends AppServices {
     await iS<AppSharedPref>().deleteValue(AppPrefKey.token);
     await iS<AppSharedPref>().deleteValue(AppPrefKey.refreshToken);
     await iS<AppSharedPref>().deleteValue(AppPrefKey.isSavePassword);
-    snackbarKey.currentState!.showSnackBar(
-      const SnackBar(
-        backgroundColor: Colors.red,
-        duration: Duration(seconds: 3),
-        content: AppTextWidget(
-          'Your session has expired. Please login again.',
-          textStyle: TextStyle(color: Colors.white),
-        ),
-      ),
-    );
-    navigatorKey.currentState!.pushAndRemoveUntil(
-      MaterialPageRoute<void>(
-        builder: (BuildContext context) => const SignInPage(),
-      ),
-      (Route<dynamic> route) => false,
-    );
+    // snackbarKey.currentState!.showSnackBar(
+    //   const SnackBar(
+    //     backgroundColor: Colors.red,
+    //     duration: Duration(seconds: 5),
+    //     content: AppTextWidget(
+    //       'Your session has expired. Please login again.',
+    //       textStyle: TextStyle(color: Colors.white),
+    //     ),
+    //   ),
+    // );
+    // navigatorKey.currentState!.pushAndRemoveUntil(
+    //   MaterialPageRoute<void>(
+    //     builder: (BuildContext context) => const SignInPage(),
+    //   ),
+    //   (Route<dynamic> route) => false,
+    // );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class AppRichTextWidget extends StatelessWidget {
   const AppRichTextWidget({
@@ -17,7 +16,7 @@ class AppRichTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        style: context.textTheme.bodyMedium,
+        style: Theme.of(context).textTheme.bodyMedium,
         children: textSpans,
       ),
       textAlign: textAlign ?? TextAlign.start,

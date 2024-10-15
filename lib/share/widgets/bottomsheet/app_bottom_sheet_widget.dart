@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/core/translations/strings.dart';
 import 'package:habit_garden/core/utils/widget_utils.dart';
@@ -23,7 +23,8 @@ class AppBottomSheetWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              AppTextWidget(label, textStyle: context.textTheme.titleLarge),
+              AppTextWidget(label,
+                  textStyle: Theme.of(context).textTheme.titleLarge),
               const SizedBox(height: 24),
               child,
               WidgetUtils.footerSpace(),
@@ -57,7 +58,7 @@ class AppBottomSheetWidget {
       {Function? onPickerVideo, Function? onPickerCamera}) async {
     await _showBaseBottomSheetWidget(
       context,
-      label: Strings.selector.tr,
+      label: Strings.selector,
       child: Column(
         children: [
           AppFilledButtonWidget(

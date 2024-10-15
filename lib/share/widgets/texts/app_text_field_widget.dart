@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:get/get.dart';
 import 'package:habit_garden/share/themes/app_theme.dart';
 import 'app_text_widget.dart';
 
@@ -61,7 +60,6 @@ class AppTextFieldWidget extends StatefulWidget {
 
 class _AppTextFieldWidgetState extends State<AppTextFieldWidget> {
   late final TextEditingController _textEditingController;
-  final isFocused = false.obs;
   late FocusNode _textFieldFocusNode;
 
   @override
@@ -106,18 +104,18 @@ class _AppTextFieldWidgetState extends State<AppTextFieldWidget> {
             children: [
               AppTextWidget(
                 widget.label,
-                textStyle: context.textTheme.bodySmall?.copyWith(
-                  color: AppColors.get().neutralColor[60],
-                ),
+                textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.get().neutralColor[60],
+                    ),
               ),
               if (widget.isRequired) const SizedBox(width: 2),
               if (widget.isRequired && !widget.isViewTextOnly)
                 AppTextWidget(
                   '*',
-                  textStyle: context.textTheme.bodySmall?.copyWith(
+                  textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: widget.helperText != null
                           ? AppColors.get().waringColor
-                          : context.theme.colorScheme.error),
+                          : Theme.of(context).colorScheme.error),
                 )
             ],
           ),
@@ -128,13 +126,12 @@ class _AppTextFieldWidgetState extends State<AppTextFieldWidget> {
                       widget.initValue?.isNotEmpty == true
                           ? widget.initValue!
                           : '--',
-                      textStyle: context.textTheme.bodyMedium),
+                      textStyle: Theme.of(context).textTheme.bodyMedium),
                 )
               : Focus(
                   onFocusChange: (value) {
-                    isFocused.value = value;
-                    if (!isFocused.value) {
-                      widget.onBlur?.call(_textEditingController.value.text);
+                    if (!value) {
+                      widget.onBlur?.call(_textEditingController.text);
                     }
                   },
                   child: TextFormField(
@@ -148,7 +145,7 @@ class _AppTextFieldWidgetState extends State<AppTextFieldWidget> {
                     maxLength: widget.maxLength,
                     minLines: 1,
                     readOnly: false,
-                    style: context.textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodyMedium,
                     obscureText: widget.isHidePassword,
                     validator: widget.validator,
                     textInputAction: widget.textInputAction,
@@ -181,18 +178,21 @@ class _AppTextFieldWidgetState extends State<AppTextFieldWidget> {
                               ),
                             )
                           : UnderlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: context.theme.primaryColor),
+                              borderSide: BorderSide(
+                                  color: Theme.of(context).primaryColor),
                             ),
                       hintText: widget.hintText,
                       helperText: widget.helperText,
                       helperMaxLines: 3,
-                      helperStyle: context.theme.textTheme.bodySmall?.copyWith(
-                        color: AppColors.get().waringColor,
-                        fontWeight: FontWeight.w400,
-                      ),
-                      hintStyle: context.textTheme.bodyMedium
-                          ?.copyWith(color: context.theme.hintColor),
+                      helperStyle:
+                          Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: AppColors.get().waringColor,
+                                fontWeight: FontWeight.w400,
+                              ),
+                      hintStyle: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: Theme.of(context).hintColor),
                       contentPadding:
                           const EdgeInsets.only(top: 10, bottom: 12),
                       isDense: true,

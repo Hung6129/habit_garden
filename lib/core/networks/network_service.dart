@@ -6,7 +6,6 @@ import 'package:habit_garden/core/networks/api_provider.dart';
 import 'package:habit_garden/core/services/app_services.dart';
 import 'package:habit_garden/core/services/injection_service.dart';
 import 'package:logger/logger.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'client_request.dart';
 import 'nets/app_exception.dart';
 import 'nets/app_response.dart';
@@ -16,33 +15,12 @@ part 'network_interceptor_wrapper.dart';
 
 abstract class NetworkService {
   static const requestTimeOut = Duration(seconds: 120);
-
-  static Dio newDio() {
-    final dio = Dio(
-      BaseOptions(
-        baseUrl: ApiProvider.baseUrl,
-        connectTimeout: requestTimeOut,
-        receiveTimeout: requestTimeOut,
-      ),
-    )..interceptors.add(
-        PrettyDioLogger(
-          request: true,
-          requestBody: true,
-          responseBody: true,
-          error: true,
-          compact: true,
-        ),
-      );
-
-    return dio;
-  }
-
   Future<AppResult<AppResponse>> request(
       {required ClientRequest clientRequest});
 }
 
 class NetworkServiceImpl extends NetworkService {
-  late final Dio _dio;
+  final Dio _dio;
   final Logger _logger = Logger(printer: PrettyPrinter(methodCount: 0));
 
   // NetworkServiceImpl() {
@@ -50,10 +28,7 @@ class NetworkServiceImpl extends NetworkService {
   //   _dio.interceptors.add(NetworkInterceptorWrapper(diO: _dio));
   // }
 
-  NetworkServiceImpl():super(){
-    _dio = NetworkService.newDio();
-    _dio.interceptors.add(NetworkInterceptorWrapper(diO: _dio));
-  }
+  NetworkServiceImpl(this._dio);
 
   @override
   Future<AppResult<AppResponse>> request({

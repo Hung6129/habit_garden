@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/core/utils/date_utils.dart';
 import 'package:habit_garden/share/widgets/app_icon_widget.dart';
@@ -57,7 +56,7 @@ class AppChipDatePickerWidget extends StatelessWidget {
       child: Container(
         height: 32,
         decoration: BoxDecoration(
-          color: context.theme.scaffoldBackgroundColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
@@ -72,7 +71,7 @@ class AppChipDatePickerWidget extends StatelessWidget {
                   child: AppIconWidget(
                     Icons.calendar_today,
                     iconSize: AppUIConstants.normalIconSizeInFarmerCard,
-                    iconColor: context.theme.primaryColor,
+                    iconColor: Theme.of(context).primaryColor,
                   ),
                 ),
                 if (!isDefault)
@@ -97,8 +96,10 @@ class AppChipDatePickerWidget extends StatelessWidget {
                   : 'dd/mm/yyyy',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              textStyle: context.textTheme.titleSmall
-                  ?.copyWith(color: context.theme.appColor.primaryColor),
+              textStyle: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: Theme.of(context).appColor.primaryColor),
             ),
             const SizedBox(width: 8),
           ],

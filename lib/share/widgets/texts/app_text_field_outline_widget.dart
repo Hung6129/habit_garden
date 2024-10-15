@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
+
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/share/themes/app_theme.dart';
 
@@ -71,7 +71,7 @@ class AppTextFieldOutlineWidget extends StatefulWidget {
 
 class _AppTextFieldOutlineWidgetState extends State<AppTextFieldOutlineWidget> {
   late final TextEditingController _textEditingController;
-  final isFocused = false.obs;
+  // final isFocused = false.obs;
   late FocusNode _textFieldFocusNode;
 
   @override
@@ -119,7 +119,8 @@ class _AppTextFieldOutlineWidgetState extends State<AppTextFieldOutlineWidget> {
                     widget.initValue?.isNotEmpty == true
                         ? widget.initValue!
                         : '--',
-                    textStyle: widget.textStyle ?? context.textTheme.bodyMedium,
+                    textStyle: widget.textStyle ??
+                        Theme.of(context).textTheme.bodyMedium,
                     textAlign: widget.textAlign,
                   ),
                   if (widget.suffixIcon != null) widget.suffixIcon!
@@ -128,8 +129,11 @@ class _AppTextFieldOutlineWidgetState extends State<AppTextFieldOutlineWidget> {
             )
           : Focus(
               onFocusChange: (value) {
-                isFocused.value = value;
-                if (isFocused.value) {
+                // isFocused.value = value;
+                // if (isFocused.value) {
+                //   widget.onChangeTextWhenFocus?.call(_textEditingController);
+                // }
+                if (value) {
                   widget.onChangeTextWhenFocus?.call(_textEditingController);
                 }
               },
@@ -144,7 +148,7 @@ class _AppTextFieldOutlineWidgetState extends State<AppTextFieldOutlineWidget> {
                 maxLength: widget.maxLength,
                 minLines: widget.minLines ?? 1,
                 readOnly: false,
-                style: context.textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyMedium,
                 obscureText: widget.isHidePassword,
                 validator: widget.validator,
                 textInputAction: widget.textInputAction,
@@ -167,7 +171,7 @@ class _AppTextFieldOutlineWidgetState extends State<AppTextFieldOutlineWidget> {
                         )
                       : OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: context.theme.colorScheme.error,
+                            color: Theme.of(context).colorScheme.error,
                           ),
                           borderRadius: radius,
                         ),
@@ -192,7 +196,7 @@ class _AppTextFieldOutlineWidgetState extends State<AppTextFieldOutlineWidget> {
                         )
                       : OutlineInputBorder(
                           borderSide: BorderSide(
-                            color: context.theme.primaryColor,
+                            color: Theme.of(context).primaryColor,
                           ),
                           borderRadius: radius,
                         ),
@@ -202,24 +206,27 @@ class _AppTextFieldOutlineWidgetState extends State<AppTextFieldOutlineWidget> {
                     ),
                   ),
                   hintText: widget.hintText,
-                  hintStyle: context.textTheme.bodyMedium
-                      ?.copyWith(color: context.theme.hintColor),
+                  hintStyle: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: Theme.of(context).hintColor),
                   helperText: widget.helperText,
                   helperMaxLines: 3,
-                  helperStyle: context.theme.textTheme.bodySmall?.copyWith(
-                    color: AppColors.get().waringColor,
-                    fontWeight: FontWeight.w400,
-                  ),
+                  helperStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: AppColors.get().waringColor,
+                        fontWeight: FontWeight.w400,
+                      ),
                   contentPadding: const EdgeInsets.only(
                       top: 10, bottom: 12, left: 12, right: 12),
                   isDense: true,
                   suffixIcon: widget.suffixIcon,
                   suffixIconConstraints: widget.suffixIconConstraints ??
                       BoxConstraints.tight(const Size(24, 24)),
-                  counterStyle: context.theme.textTheme.labelSmall?.copyWith(
-                    color: AppColors.get().neutralColor[40],
-                    fontWeight: FontWeight.w400,
-                  ),
+                  counterStyle:
+                      Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: AppColors.get().neutralColor[40],
+                            fontWeight: FontWeight.w400,
+                          ),
                   counterText: widget.isCounterText ? null : '',
                 ),
               ),

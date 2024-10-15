@@ -1,5 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:habit_garden/core/data/local/app_shared_pref.dart';
+import 'package:habit_garden/core/networks/api_provider.dart';
 import 'package:habit_garden/core/networks/network_service.dart';
 import 'package:habit_garden/core/services/app_services.dart';
 
@@ -15,15 +17,38 @@ import 'package:habit_garden/feature/habits/domain/usecase/habit_usecase.dart';
 import 'package:habit_garden/feature/habits/presentation/blocs/habit_bloc.dart';
 import 'package:habit_garden/feature/home/blocs/main_bloc.dart';
 import 'package:habit_garden/feature/walkthrough/bloc/walkthrough_bloc.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 final iS = GetIt.instance;
 
 class InjectionService {
   static void registerServices() {
+    const requestTimeOut = Duration(seconds: 120);
+    final dio = Dio(
+      BaseOptions(
+        baseUrl: ApiProvider.baseUrl,
+        connectTimeout: requestTimeOut,
+        receiveTimeout: requestTimeOut,
+      ),
+    );
+
     /// Todo: Register services here
-    iS.registerSingleton<AppSharedPref>(AppSharedPrefImpl());
-    iS.registerLazySingleton<NetworkService>(() => NetworkServiceImpl());
+
+    // the pretty logger should add last,
+    // so it can log all the other interceptors added before it
+    iS.registerSingleton<Dio>(dio
+      ..interceptors.add(NetworkInterceptorWrapper(diO: dio))
+      ..interceptors.add(PrettyDioLogger(
+        request: true,
+        requestBody: true,
+        responseBody: true,
+        error: true,
+        compact: true,
+      )));
+
+    iS.registerSingleton<NetworkService>(NetworkServiceImpl(iS()));
     iS.registerSingleton<AppServices>(AppServicesImpl());
+    iS.registerSingleton<AppSharedPref>(AppSharedPrefImpl());
 
     /// Todo: Register datasources here
     iS.registerLazySingleton<AuthenticateDatasourceRemote>(

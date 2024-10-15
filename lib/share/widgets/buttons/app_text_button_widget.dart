@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:habit_garden/share/widgets/texts/app_text_widget.dart';
 
 class AppTextButtonWidget extends StatelessWidget {
@@ -20,14 +20,14 @@ class AppTextButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: isEnable ? () => onPressed?.call() : null,
-      style: style ?? context.theme.textButtonTheme.style,
+      style: style ?? Theme.of(context).textButtonTheme.style,
       child: AppTextWidget(
         text,
         textAlign: TextAlign.center,
         textStyle: textStyle ??
-            context.textTheme.labelLarge?.copyWith(
-              color: context.theme.primaryColor,
-            ),
+            Theme.of(context).textTheme.labelLarge?.copyWith(
+                  color: Theme.of(context).primaryColor,
+                ),
       ),
     );
   }

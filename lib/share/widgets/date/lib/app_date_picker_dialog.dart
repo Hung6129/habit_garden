@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
-import 'package:get/get.dart';
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/core/translations/strings.dart';
 import 'package:habit_garden/share/widgets/buttons/app_text_button_widget.dart';
@@ -28,25 +27,25 @@ class AppDatePickerDialog {
       lastDate: lastDate ?? defaultLastDate,
       initialMonthYearPickerMode: MonthYearPickerMode.month,
       builder: ((context, child) => Theme(
-            data: context.theme.copyWith(
+            data: Theme.of(context).copyWith(
               textButtonTheme: TextButtonThemeData(
                 style: ButtonStyle(
                   textStyle: WidgetStateProperty.all<TextStyle>(
-                    context.textTheme.titleSmall!,
+                    Theme.of(context).textTheme.titleSmall!,
                   ),
                   foregroundColor: WidgetStateProperty.all<Color>(
-                    context.theme.primaryColor,
+                    Theme.of(context).primaryColor,
                   ),
                 ),
               ),
-              colorScheme: context.theme.colorScheme.copyWith(
-                primary: context.theme.scaffoldBackgroundColor,
-                onPrimary: AppColors.get().neutralColor,
-                secondary: context.theme.primaryColor,
-                onSecondary: context.theme.scaffoldBackgroundColor,
-              ),
+              colorScheme: Theme.of(context).colorScheme.copyWith(
+                    primary: Theme.of(context).scaffoldBackgroundColor,
+                    onPrimary: AppColors.get().neutralColor,
+                    secondary: Theme.of(context).primaryColor,
+                    onSecondary: Theme.of(context).scaffoldBackgroundColor,
+                  ),
               dialogTheme: DialogTheme(
-                backgroundColor: context.theme.scaffoldBackgroundColor,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               ),
             ),
             child: Container(
@@ -68,52 +67,59 @@ class AppDatePickerDialog {
   }) async {
     var selectedAndroid = await showRoundedDatePicker(
       context: context,
-      theme: context.theme.copyWith(
-        primaryColor: context.theme.appColor.neutralColor[0],
+      theme: Theme.of(context).copyWith(
+        primaryColor: Theme.of(context).appColor.neutralColor[0],
       ),
       styleYearPicker: MaterialRoundedYearPickerStyle(
-        textStyleYear: context.textTheme.bodyMedium,
-        textStyleYearSelected: context.textTheme.titleLarge
-            ?.copyWith(color: context.theme.appColor.primaryColor),
+        textStyleYear: Theme.of(context).textTheme.bodyMedium,
+        textStyleYearSelected: Theme.of(context)
+            .textTheme
+            .titleLarge
+            ?.copyWith(color: Theme.of(context).appColor.primaryColor),
       ),
       styleDatePicker: MaterialRoundedDatePickerStyle(
         paddingDateYearHeader:
             const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-        textStyleDayButton: context.textTheme.titleLarge?.copyWith(
-          color: context.theme.appColor.primaryColor,
-          fontSize: 32,
-        ),
-        textStyleYearButton: context.textTheme.titleLarge?.copyWith(
-          color: context.theme.appColor.neutralColor[100],
-        ),
-        textStyleMonthYearHeader: context.textTheme.titleSmall,
+        textStyleDayButton: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).appColor.primaryColor,
+              fontSize: 32,
+            ),
+        textStyleYearButton: Theme.of(context).textTheme.titleLarge?.copyWith(
+              color: Theme.of(context).appColor.neutralColor[100],
+            ),
+        textStyleMonthYearHeader: Theme.of(context).textTheme.titleSmall,
         paddingMonthHeader: const EdgeInsets.symmetric(vertical: 12),
-        textStyleDayHeader: context.textTheme.bodySmall?.copyWith(
-          fontWeight: FontWeight.w400,
-        ),
-        textStyleDayOnCalendarDisabled: context.textTheme.bodySmall?.copyWith(
-          fontWeight: FontWeight.w400,
-          color: context.theme.appColor.neutralColor[20],
-        ),
-        textStyleButtonPositive: context.textTheme.titleSmall
-            ?.copyWith(color: context.theme.appColor.primaryColor),
-        textStyleButtonNegative: context.textTheme.titleSmall
-            ?.copyWith(color: context.theme.appColor.primaryColor),
+        textStyleDayHeader: Theme.of(context).textTheme.bodySmall?.copyWith(
+              fontWeight: FontWeight.w400,
+            ),
+        textStyleDayOnCalendarDisabled:
+            Theme.of(context).textTheme.bodySmall?.copyWith(
+                  fontWeight: FontWeight.w400,
+                  color: Theme.of(context).appColor.neutralColor[20],
+                ),
+        textStyleButtonPositive: Theme.of(context)
+            .textTheme
+            .titleSmall
+            ?.copyWith(color: Theme.of(context).appColor.primaryColor),
+        textStyleButtonNegative: Theme.of(context)
+            .textTheme
+            .titleSmall
+            ?.copyWith(color: Theme.of(context).appColor.primaryColor),
       ),
       builderDay: (DateTime dateTime, bool isCurrentDay, bool isSelected,
           TextStyle defaultTextStyle) {
         if (isSelected) {
           return Container(
             decoration: BoxDecoration(
-                color: context.theme.appColor.primaryColor,
+                color: Theme.of(context).appColor.primaryColor,
                 shape: BoxShape.circle),
             child: Center(
               child: Text(
                 dateTime.day.toString(),
-                style: context.textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.w500,
-                  color: context.theme.appColor.neutralColor[0],
-                ),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).appColor.neutralColor[0],
+                    ),
               ),
             ),
           );
@@ -121,15 +127,16 @@ class AppDatePickerDialog {
         if (isCurrentDay) {
           return Container(
             decoration: BoxDecoration(
-                border: Border.all(color: context.theme.primaryColor, width: 1),
+                border:
+                    Border.all(color: Theme.of(context).primaryColor, width: 1),
                 shape: BoxShape.circle),
             child: Center(
               child: Text(
                 dateTime.day.toString(),
-                style: context.textTheme.bodySmall?.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: context.theme.appColor.primaryColor,
-                ),
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).appColor.primaryColor,
+                    ),
               ),
             ),
           );
@@ -137,7 +144,7 @@ class AppDatePickerDialog {
         return Center(
           child: Text(
             dateTime.day.toString(),
-            style: context.textTheme.bodySmall?.copyWith(
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w400, color: defaultTextStyle.color),
           ),
         );
@@ -172,7 +179,7 @@ class AppDatePickerDialog {
           insetPadding: const EdgeInsets.all(20),
           child: Container(
             decoration: BoxDecoration(
-              color: context.theme.dialogBackgroundColor,
+              color: Theme.of(context).dialogBackgroundColor,
               borderRadius: BorderRadius.circular(24),
             ),
             padding: const EdgeInsets.all(16),

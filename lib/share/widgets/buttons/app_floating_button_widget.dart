@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/share/widgets/app_icon_widget.dart';
 
@@ -25,8 +23,8 @@ class AppFloatingButtonWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(AppUIConstants.defaultPadding),
           gradient: LinearGradient(
             colors: [
-              context.theme.primaryColorLight,
-              context.theme.primaryColor,
+              Theme.of(context).primaryColorLight,
+              Theme.of(context).primaryColor,
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -36,7 +34,7 @@ class AppFloatingButtonWidget extends StatelessWidget {
         child: AppIconWidget(
           icon,
           bgColor: Colors.transparent,
-          iconColor: context.theme.colorScheme.onPrimary,
+          iconColor: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
     );

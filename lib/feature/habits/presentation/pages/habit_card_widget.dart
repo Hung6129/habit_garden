@@ -20,6 +20,11 @@ class HabitCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppCardLayoutWidget(
+      bgColor: habit.priority == "HIGH"
+          ? const Color.fromARGB(255, 231, 187, 183)
+          : habit.priority == "MEDIUM"
+              ? const Color.fromARGB(255, 223, 191, 145)
+              : const Color.fromARGB(255, 139, 213, 141),
       actions: [
         CardUtils.buildEdit(context, onDetailAction),
         CardUtils.buildDelete(context, onRemoveAction),
@@ -31,6 +36,10 @@ class HabitCardWidget extends StatelessWidget {
       content: AppTextWidget(
         habit.description,
         textStyle: Theme.of(context).textTheme.bodyMedium,
+      ),
+      subContent: AppTextWidget(
+        habit.priority,
+        textStyle: Theme.of(context).textTheme.bodySmall,
       ),
     );
   }

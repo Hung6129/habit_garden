@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/share/widgets/texts/app_text_widget.dart';
 import 'package:intl/intl.dart';
@@ -35,7 +33,7 @@ class AppChipCalendarWidget extends StatelessWidget {
       child: Container(
         height: 32,
         decoration: BoxDecoration(
-          color: context.theme.scaffoldBackgroundColor,
+          color: Theme.of(context).scaffoldBackgroundColor,
           borderRadius: borderRadius ?? BorderRadius.circular(8),
           border: border,
         ),
@@ -51,7 +49,7 @@ class AppChipCalendarWidget extends StatelessWidget {
                     // AppCustomIcons.calendar_today_filled,
                     Icons.calendar_today,
                     iconSize: AppUIConstants.normalIconSizeInFarmerCard,
-                    iconColor: context.theme.primaryColor,
+                    iconColor: Theme.of(context).primaryColor,
                   ),
                 ),
                 if (isDot)
@@ -61,7 +59,7 @@ class AppChipCalendarWidget extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: context.theme.colorScheme.error,
+                        color: Theme.of(context).colorScheme.error,
                       ),
                       width: 8,
                       height: 8,
@@ -73,7 +71,7 @@ class AppChipCalendarWidget extends StatelessWidget {
               renderDate,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              textStyle: context.textTheme.titleMedium,
+              textStyle: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(
               width: 8,

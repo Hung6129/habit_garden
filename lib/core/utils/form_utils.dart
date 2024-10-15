@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-
-import 'package:get/get.dart';
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/core/translations/strings.dart';
 import 'package:habit_garden/share/widgets/date/app_date_picker_widget.dart';
@@ -176,16 +174,18 @@ class FormUtils {
           children: [
             AppTextWidget(
               label,
-              textStyle: context.textTheme.bodySmall?.copyWith(
-                color: AppColors.get().neutralColor[60],
-              ),
+              textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: AppColors.get().neutralColor[60],
+                  ),
             ),
             if (require) const SizedBox(width: 2),
             if (require)
               AppTextWidget(
                 '*',
-                textStyle: context.textTheme.bodySmall
-                    ?.copyWith(color: context.theme.colorScheme.error),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.error),
               )
           ],
         ),
@@ -526,9 +526,9 @@ class FormUtils {
       children: [
         AppTextWidget(
           label,
-          textStyle: context.theme.textTheme.bodySmall?.copyWith(
-            color: AppColors.get().neutralColor[60],
-          ),
+          textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: AppColors.get().neutralColor[60],
+              ),
         ),
         FormBuilderField<DateTime?>(
           name: name,
@@ -536,7 +536,7 @@ class FormUtils {
             field.value != null
                 ? DateFormat(AppConstants.dateTimeDefaultFormat)
                     .format(field.value!)
-                : Strings.dateDefaultFormat.tr,
+                : Strings.dateDefaultFormat,
             textStyle: textStyle,
           ),
         ),
@@ -556,9 +556,9 @@ class FormUtils {
       children: [
         AppTextWidget(
           "$label ${suffix == true ? Strings.textVND : ''}",
-          textStyle: context.theme.textTheme.bodyMedium?.copyWith(
-            color: AppColors.get().neutralColor[60],
-          ),
+          textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: AppColors.get().neutralColor[60],
+              ),
         ),
         FormUtils.buildFieldOnlyViewNoLabel(
           name: name,
@@ -589,16 +589,16 @@ class FormUtils {
           children: [
             AppTextWidget(
               label,
-              textStyle: context.theme.textTheme.bodyMedium?.copyWith(
-                color: AppColors.get().neutralColor[60],
-              ),
+              textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.get().neutralColor[60],
+                  ),
             ),
             if (isRequired)
               AppTextWidget(
                 ' *',
-                textStyle: context.theme.textTheme.bodyMedium?.copyWith(
-                  color: context.theme.colorScheme.error,
-                ),
+                textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
               ),
           ],
         ),
@@ -617,7 +617,7 @@ class FormUtils {
             ],
             helperText: helperText,
             initValue: initValue,
-            hintText: Strings.moneyHint.tr,
+            hintText: Strings.moneyHint,
             onChanged: onChanged,
             isSigned: isSigned,
             isDecimal: isDecimal,
@@ -652,16 +652,16 @@ class FormUtils {
           children: [
             AppTextWidget(
               label,
-              textStyle: context.theme.textTheme.bodyMedium?.copyWith(
-                color: AppColors.get().neutralColor[60],
-              ),
+              textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: AppColors.get().neutralColor[60],
+                  ),
             ),
             if (isRequired)
               AppTextWidget(
                 ' *',
-                textStyle: context.theme.textTheme.bodyMedium?.copyWith(
-                  color: context.theme.colorScheme.error,
-                ),
+                textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
               ),
           ],
         ),
@@ -737,7 +737,7 @@ class FormUtils {
           isDisabled: false,
           validator: validator,
           initValue: initValue ?? field.value,
-          filledColor: context.theme.appColor.neutralColor[0],
+          filledColor: Theme.of(context).appColor.neutralColor[0],
           textAlign: TextAlign.end,
           helperText: helperText,
           onChangeTextWhenFocus: onChangeTextWhenFocus,

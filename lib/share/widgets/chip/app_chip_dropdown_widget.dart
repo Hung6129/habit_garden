@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
 import 'package:habit_garden/share/widgets/texts/app_text_widget.dart';
 import 'package:habit_garden/share/themes/app_theme.dart';
 
@@ -36,9 +34,9 @@ class AppChipDropdownWidget extends StatelessWidget {
               child: AppTextWidget(
                 hint,
                 overflow: TextOverflow.ellipsis,
-                textStyle: context.textTheme.titleSmall?.copyWith(
+                textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: isSelected
-                        ? context.theme.primaryColor
+                        ? Theme.of(context).primaryColor
                         : AppColors.get().neutralColor[80]),
               ),
             ),
@@ -46,7 +44,7 @@ class AppChipDropdownWidget extends StatelessWidget {
             Icon(Icons.arrow_drop_down,
                 size: 18,
                 color: isSelected
-                    ? context.theme.primaryColor
+                    ? Theme.of(context).primaryColor
                     : AppColors.get().neutralColor[80])
           ],
         ),

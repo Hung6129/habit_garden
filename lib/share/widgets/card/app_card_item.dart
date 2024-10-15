@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
 import 'package:habit_garden/share/widgets/texts/app_text_widget.dart';
 import 'package:habit_garden/share/themes/app_theme.dart';
 
@@ -23,9 +21,9 @@ class AppCartItemContentWithIcon extends StatelessWidget {
         Flexible(
           child: AppTextWidget(
             content.isNotEmpty ? content : '--',
-            textStyle: context.textTheme.bodyMedium?.copyWith(
-              color: context.theme.appColor.neutralColor[80],
-            ),
+            textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).appColor.neutralColor[80],
+                ),
             overflow: TextOverflow.ellipsis,
           ),
         ),

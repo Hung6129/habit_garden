@@ -13,10 +13,7 @@ class _HabitListPageState extends State<HabitListPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => iS<HabitBloc>()
-        ..add(
-          GetAllHabitByUserIdEvent(),
-        ),
+      create: (_) => iS<HabitBloc>()..add(GetAllHabitByUserIdEvent()),
       child: _buildBody(),
     );
   }
@@ -24,21 +21,21 @@ class _HabitListPageState extends State<HabitListPage> {
   Stack _buildBody() {
     return Stack(
       children: [
-        BlocConsumer<HabitBloc, HabitState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            if (state is GetAllHabitByUserIdState) {
-              if (state.status == GetAllHabitByUserIdEnum.loading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              if (state.status == GetAllHabitByUserIdEnum.loaded) {
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    iS<HabitBloc>().add(RefreshHabitListEvent());
-                  },
-                  child: ListView.builder(
+        RefreshIndicator(
+          onRefresh: () async {
+            iS<HabitBloc>().add(GetAllHabitByUserIdEvent());
+          },
+          child: BlocConsumer<HabitBloc, HabitState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              if (state is GetAllHabitByUserIdState) {
+                if (state.status == GetAllHabitByUserIdEnum.loading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state.status == GetAllHabitByUserIdEnum.loaded) {
+                  return ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
                     itemCount: state.habits.length,
                     itemBuilder: (context, index) {
@@ -49,15 +46,15 @@ class _HabitListPageState extends State<HabitListPage> {
                         onRemoveAction: () {},
                       );
                     },
-                  ),
-                );
+                  );
+                }
+                if (state.status == GetAllHabitByUserIdEnum.error) {
+                  return Center(child: Text(state.errorMesssage));
+                }
               }
-              if (state.status == GetAllHabitByUserIdEnum.error) {
-                return Center(child: Text(state.errorMesssage));
-              }
-            }
-            return Container();
-          },
+              return Container();
+            },
+          ),
         ),
         Positioned(
           bottom: 16,
@@ -71,11 +68,18 @@ class _HabitListPageState extends State<HabitListPage> {
     );
   }
 
+  List<RadioModel> listPriority = [
+    RadioModel(label: 'Low', value: 'Low'),
+    RadioModel(label: 'Medium', value: 'Medium'),
+    RadioModel(label: 'High', value: 'High', isSelected: true),
+  ];
+
   _showFormCreateNewHabit(
     BuildContext context,
   ) {
     return DialogUtil.onDialogCreateHabit(
       context,
+      barrierDismissible: false,
       title: 'Create New Habit',
       onNegativeFunc: () {
         Navigator.pop(context);
@@ -127,7 +131,9 @@ class _HabitListPageState extends State<HabitListPage> {
                   onTap: () async {
                     var resultingDuration = await showDurationPicker(
                       context: context,
-                      initialTime: const Duration(minutes: 30),
+                      initialTime: field.value != null
+                          ? Duration(minutes: int.parse(field.value!))
+                          : const Duration(minutes: 30),
                     );
                     field.didChange(resultingDuration.toString());
                     _formKey.currentState?.fields['duration']
@@ -139,6 +145,8 @@ class _HabitListPageState extends State<HabitListPage> {
                     label: 'Duration',
                     hintText: 'Enter habit duration',
                     initValue: field.value,
+                    suffixIcon: const AppTextWidget('Minutes'),
+                    suffixIconConstraints: const BoxConstraints(minWidth: 80),
                     isDisabled: true,
                     onChanged: (model) => {},
                   ),
@@ -148,6 +156,25 @@ class _HabitListPageState extends State<HabitListPage> {
             SizedBox(
               height: AppUIConstants.majorScalePadding(8),
             ),
+            FormBuilderField<String?>(
+                name: 'priority',
+                builder: (field) {
+                  return AppRadioGroupWidget(
+                    label: 'Priority',
+                    radios: listPriority,
+                    onChanged: (model) {
+                      setState(() {
+                        listPriority = listPriority
+                            .map((e) => e.copyWith(isSelected: e == model))
+                            .toList();
+                      });
+
+                      field.didChange(model!.value);
+                      _formKey.currentState?.fields['priority']
+                          ?.didChange(model.value);
+                    },
+                  );
+                })
           ],
         ),
       ),

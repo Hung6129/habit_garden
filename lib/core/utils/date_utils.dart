@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:intl/intl.dart';
 
@@ -52,11 +50,11 @@ class DateUtil {
         : '--';
   }
 
-  static String? formatDisplayTime(TimeOfDay? timeOfDay) {
-    if (timeOfDay == null || Get.context == null) return null;
+  // static String? formatDisplayTime(TimeOfDay? timeOfDay) {
+  //   if (timeOfDay == null || Get.context == null) return null;
 
-    return timeOfDay.format(Get.context!);
-  }
+  //   return timeOfDay.format(Get.context!);
+  // }
 
   static DateTime mostRecentMonday(DateTime date) =>
       DateTime(date.year, date.month, date.day - (date.weekday - 1));

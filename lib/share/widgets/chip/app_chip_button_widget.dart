@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
 import 'package:habit_garden/share/widgets/texts/app_text_widget.dart';
 import 'package:habit_garden/share/themes/app_theme.dart';
 
@@ -27,15 +25,15 @@ class AppChipButtonWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
               color: isSelected
-                  ? context.theme.primaryColor
+                  ? Theme.of(context).primaryColor
                   : AppColors.get().neutralColor[30]!),
         ),
         child: AppTextWidget(
           text,
           overflow: TextOverflow.ellipsis,
-          textStyle: context.textTheme.titleSmall?.copyWith(
+          textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
               color: isSelected
-                  ? context.theme.primaryColor
+                  ? Theme.of(context).primaryColor
                   : AppColors.get().neutralColor[80]),
         ),
       ),

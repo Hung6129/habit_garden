@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/share/widgets/texts/app_text_widget.dart';
 import 'package:habit_garden/share/themes/app_theme.dart';
@@ -35,7 +34,7 @@ class AppFilledButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: isEnable ? () => onPressed?.call() : null,
-      highlightColor: context.theme.primaryColor,
+      highlightColor: Theme.of(context).primaryColor,
       borderRadius: BorderRadius.circular(100),
       child: Container(
         padding: buttonSize == ButtonSize.regular
@@ -47,11 +46,11 @@ class AppFilledButtonWidget extends StatelessWidget {
               ? LinearGradient(
                   colors: [
                     isEnable
-                        ? context.theme.primaryColorLight
-                        : context.theme.disabledColor,
+                        ? Theme.of(context).primaryColorLight
+                        : Theme.of(context).disabledColor,
                     isEnable
-                        ? context.theme.primaryColor
-                        : context.theme.disabledColor,
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).disabledColor,
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -85,11 +84,11 @@ class AppFilledButtonWidget extends StatelessWidget {
       text,
       textAlign: TextAlign.center,
       textStyle: textStyle ??
-          context.textTheme.titleSmall?.copyWith(
-            color: isEnable
-                ? context.theme.colorScheme.onPrimary
-                : AppColors.get().neutralColor[40],
-          ),
+          Theme.of(context).textTheme.titleSmall?.copyWith(
+                color: isEnable
+                    ? Theme.of(context).colorScheme.onPrimary
+                    : AppColors.get().neutralColor[40],
+              ),
     );
   }
 }

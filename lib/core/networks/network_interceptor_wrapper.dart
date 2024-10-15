@@ -25,8 +25,7 @@ class NetworkInterceptorWrapper extends QueuedInterceptorsWrapper {
       return handler.next(err);
     }
     // Do something with response error
-    if (err.response?.statusCode == 401 &&
-        err.response?.data['meta']['errorMessages'] == 'jwt expired') {
+    if (err.response?.data['meta']['errorMessages'] == 'jwt expired') {
       _logger
           .e('Token expired: ${err.response?.data['meta']['errorMessages']}');
       // Handle refresh token
@@ -44,9 +43,13 @@ class NetworkInterceptorWrapper extends QueuedInterceptorsWrapper {
           ),
         );
         if (response.statusCode == 200) {
-          final token = response.data['result']['newAccessToken'];
-          _logger.d('Get new Token: $token');
-          await iS<AppSharedPref>().setValue(AppPrefKey.token, token);
+          final newToken = response.data['result']['newAccessToken'];
+          final newRefreshToken = response.data['result']['newRefreshToken'];
+          _logger.d(
+              'Get new Token: $newToken and new Refresh token: $newRefreshToken');
+          await iS<AppSharedPref>().setValue(AppPrefKey.token, newToken);
+          await iS<AppSharedPref>()
+              .setValue(AppPrefKey.refreshToken, newRefreshToken);
           return handler.resolve(await diO.fetch(err.requestOptions));
         }
       }
@@ -60,7 +63,7 @@ class NetworkInterceptorWrapper extends QueuedInterceptorsWrapper {
 
   Future<Map<String, String>> _headerToken() async {
     final token = await iS<AppSharedPref>().getValue(AppPrefKey.token, '');
-    _logger.d('Header token: $token');
+    // _logger.d('Header token: $token');
     final tokenHeader =
         token.isEmpty ? _basicToken : {'Authorization': 'Bearer $token'};
     return {

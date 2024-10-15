@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/core/translations/strings.dart';
 import 'package:habit_garden/core/utils/date_utils.dart';
@@ -46,17 +45,19 @@ class AppDatePickerWidget extends StatelessWidget {
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                textStyle: context.textTheme.bodySmall?.copyWith(
-                  color: AppColors.get().neutralColor[60],
-                ),
+                textStyle: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppColors.get().neutralColor[60],
+                    ),
               ),
             ),
             if (isRequired) const SizedBox(width: 2),
             if (isRequired && !isViewTextOnly)
               AppTextWidget(
                 '*',
-                textStyle: context.textTheme.bodySmall
-                    ?.copyWith(color: context.theme.colorScheme.error),
+                textStyle: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Theme.of(context).colorScheme.error),
               )
           ],
         ),
@@ -96,7 +97,7 @@ class AppDatePickerWidget extends StatelessWidget {
                         ? DateFormat(AppConstants.dateTimeDefaultFormat)
                             .format(initValue!)
                         : Strings.dateDefaultDisplayWhenNull,
-                    textStyle: context.textTheme.bodyMedium,
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
                   ),
                 )
               : InputDecorator(
@@ -112,7 +113,7 @@ class AppDatePickerWidget extends StatelessWidget {
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide:
-                            BorderSide(color: context.theme.primaryColor),
+                            BorderSide(color: Theme.of(context).primaryColor),
                       ),
                       contentPadding:
                           const EdgeInsets.only(top: 10, bottom: 12),
@@ -131,9 +132,11 @@ class AppDatePickerWidget extends StatelessWidget {
                             .format(initValue ?? DateTime.now())
                         : Strings.chooseDate,
                     textStyle: initValue != null
-                        ? context.textTheme.bodyMedium
-                        : context.textTheme.bodyMedium
-                            ?.copyWith(color: context.theme.hintColor),
+                        ? Theme.of(context).textTheme.bodyMedium
+                        : Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Theme.of(context).hintColor),
                   ),
                 ),
         ),

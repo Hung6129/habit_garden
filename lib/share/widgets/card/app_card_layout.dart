@@ -14,6 +14,7 @@ class AppCardLayoutWidget extends StatelessWidget {
     this.subContent,
     this.hasPadding = true,
     this.hasBorder = true,
+    this.bgColor,
   });
 
   final Function? onDetailAction;
@@ -24,6 +25,8 @@ class AppCardLayoutWidget extends StatelessWidget {
   final Widget? subContent;
   final bool hasPadding;
   final bool hasBorder;
+
+  final Color? bgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class AppCardLayoutWidget extends StatelessWidget {
 
   Widget _buildContent() {
     return Container(
-      color: AppColors.get().neutralColor[0],
+      color: bgColor ?? AppColors.get().neutralColor[0],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

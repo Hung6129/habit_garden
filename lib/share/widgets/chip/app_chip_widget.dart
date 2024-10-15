@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../app_icon_widget.dart';
 
 class AppChipWidget extends StatelessWidget {
   const AppChipWidget({
-    Key? key,
+    super.key,
     required this.icon,
     this.iconColor,
     this.isDot = false,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final Color? iconColor;
@@ -27,7 +26,7 @@ class AppChipWidget extends StatelessWidget {
             width: 40,
             height: 32,
             decoration: BoxDecoration(
-              color: context.theme.colorScheme.surface,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(8),
             ),
             alignment: Alignment.center,
@@ -44,7 +43,7 @@ class AppChipWidget extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: context.theme.colorScheme.error,
+                  color: Theme.of(context).colorScheme.error,
                 ),
                 width: 8,
                 height: 8,

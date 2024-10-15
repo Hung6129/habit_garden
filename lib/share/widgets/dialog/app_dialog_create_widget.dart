@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:habit_garden/share/widgets/buttons/app_filled_button_widget.dart';
 import 'package:habit_garden/share/widgets/buttons/app_outlined_button_widget.dart';
 import 'package:habit_garden/share/widgets/texts/app_text_widget.dart';
@@ -32,7 +32,7 @@ class AppDialogCreateWidget {
       insetPadding: const EdgeInsets.all(20),
       child: Container(
         decoration: BoxDecoration(
-          color: context.theme.dialogBackgroundColor,
+          color: Theme.of(context).dialogBackgroundColor,
           borderRadius: BorderRadius.circular(24),
         ),
         padding: const EdgeInsets.all(16),
@@ -43,7 +43,7 @@ class AppDialogCreateWidget {
           children: [
             AppTextWidget(
               title,
-              textStyle: context.textTheme.titleLarge,
+              textStyle: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
@@ -53,7 +53,7 @@ class AppDialogCreateWidget {
                     maxHeight: MediaQuery.of(context).size.height * 0.5),
                 child: AppTextWidget(
                   subText!,
-                  textStyle: context.textTheme.bodyLarge,
+                  textStyle: Theme.of(context).textTheme.bodyLarge,
                   textAlign: TextAlign.center,
                 ),
               ),

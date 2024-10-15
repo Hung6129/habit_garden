@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:get/get.dart';
+
 import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/core/translations/strings.dart';
 import 'package:habit_garden/share/widgets/app_icon_widget.dart';
@@ -22,15 +22,15 @@ class CardUtils {
           AppIconWidget(
             Icons.delete,
             iconSize: AppUIConstants.svgSize,
-            iconColor: context.theme.colorScheme.error,
+            iconColor: Theme.of(context).colorScheme.error,
             bgColor: AppColors.get().errorColor[10]!,
           ),
           SizedBox(height: AppUIConstants.majorScalePadding(2)),
           AppTextWidget(
             Strings.delete,
-            textStyle: context.textTheme.titleSmall?.copyWith(
-              color: context.theme.colorScheme.error,
-            ),
+            textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
           )
         ],
       ),
@@ -56,9 +56,9 @@ class CardUtils {
           AppTextWidget(
             text ?? Strings.edit,
             textAlign: TextAlign.center,
-            textStyle: context.textTheme.titleSmall?.copyWith(
-              color: AppColors.get().infoColor,
-            ),
+            textStyle: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  color: AppColors.get().infoColor,
+                ),
           )
         ],
       ),
@@ -76,9 +76,9 @@ class CardUtils {
         SizedBox(width: AppUIConstants.majorScalePadding(1)),
         AppTextWidget(
           content,
-          textStyle: context.textTheme.bodyMedium?.copyWith(
-            color: context.theme.appColor.neutralColor[80],
-          ),
+          textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).appColor.neutralColor[80],
+              ),
           overflow: TextOverflow.ellipsis,
         ),
       ],
@@ -94,7 +94,7 @@ class CardUtils {
         Icon(
           icon,
           size: AppUIConstants.miniIconSize,
-          color: context.theme.iconTheme.color,
+          color: Theme.of(context).iconTheme.color,
         ),
         SizedBox(width: AppUIConstants.majorScalePadding(1)),
         Flexible(
@@ -102,14 +102,14 @@ class CardUtils {
             textSpans: [
               TextSpan(
                 text: label,
-                style: context.textTheme.bodyMedium?.copyWith(
-                  color: context.theme.appColor.neutralColor[80],
-                ),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: Theme.of(context).appColor.neutralColor[80],
+                    ),
               ),
               const TextSpan(text: ' '),
               TextSpan(
                 text: content,
-                style: context.theme.textTheme.titleSmall,
+                style: Theme.of(context).textTheme.titleSmall,
               ),
             ],
           ),
