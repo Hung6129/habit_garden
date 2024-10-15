@@ -3,11 +3,41 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habit_garden/core/translations/strings.dart';
 import 'package:habit_garden/share/widgets/buttons/app_filled_button_widget.dart';
 import 'package:habit_garden/share/widgets/buttons/app_outlined_button_widget.dart';
+import 'package:habit_garden/share/widgets/dialog/app_dialog_create_widget.dart';
 import 'package:habit_garden/share/widgets/dialog/app_dialog_default_widget.dart';
 import 'package:habit_garden/share/themes/app_theme.dart';
 
 class DialogUtil {
   DialogUtil._();
+
+  static Future<void> onDialogCreateHabit(
+    BuildContext context, {
+    required String title,
+    bool hasCloseIcon = false,
+    String? subText,
+    Widget? subWidget,
+    String? positiveText,
+    String? negativeText,
+    Function? onPositiveFunc,
+    Function? onNegativeFunc,
+    bool barrierDismissible = false,
+  }) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AppDialogCreateWidget(
+          title: title,
+          subText: subText,
+          subWidget: subWidget,
+          positiveText: positiveText ?? Strings.close,
+          negativeText: negativeText,
+          onPositiveFunc: onPositiveFunc,
+          onNegativeFunc: onNegativeFunc,
+          barrierDismissible: barrierDismissible,
+        ).showDialog(context);
+      },
+    );
+  }
 
   static Future<void> onDialogWarning(
     BuildContext context, {
@@ -98,7 +128,7 @@ class DialogUtil {
         });
   }
 
-  static void onDialogCancelWithoutIcon(
+  static Future<void> onDialogCancelWithoutIcon(
     BuildContext context, {
     required String title,
     String? subText,
@@ -109,18 +139,22 @@ class DialogUtil {
     Function? onNegativeFunc,
     bool barrierDismissible = false,
   }) {
-    AppDialogDefaultWidget(
-      icon: null,
-      title: title,
-      subText: subText,
-      hasCloseIcon: hasCloseIcon,
-      positiveText: positiveText ?? Strings.close,
-      negativeText: negativeText,
-      onPositiveFunc: onPositiveFunc,
-      positiveButtonColor: AppColors.get().errorColor,
-      onNegativeFunc: onNegativeFunc,
-      barrierDismissible: barrierDismissible,
-    ).showDialog(context);
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AppDialogDefaultWidget(
+            icon: null,
+            title: title,
+            subText: subText,
+            hasCloseIcon: hasCloseIcon,
+            positiveText: positiveText ?? Strings.close,
+            negativeText: negativeText,
+            onPositiveFunc: onPositiveFunc,
+            positiveButtonColor: AppColors.get().errorColor,
+            onNegativeFunc: onNegativeFunc,
+            barrierDismissible: barrierDismissible,
+          ).showDialog(context);
+        });
   }
 
   static Future<void> onDialogSuccess(
@@ -188,7 +222,7 @@ class DialogUtil {
         });
   }
 
-  static void onDialogConfirmDelete(
+  static Future<void> onDialogConfirmDelete(
     BuildContext context, {
     required String title,
     String? subText,
@@ -202,21 +236,25 @@ class DialogUtil {
     Color? positiveButtonColor,
     bool barrierDismissible = false,
   }) {
-    AppDialogDefaultWidget(
-      icon: hasIcon
-          ? SvgPicture.asset('assets/vectors/ic_delete_on_dialog.svg')
-          : null,
-      title: title,
-      hasCloseIcon: hasCloseIcon,
-      subText: subText,
-      subWidget: subWidget,
-      negativeText: negativeText ?? Strings.close,
-      positiveText: positiveText ?? Strings.confirm,
-      onPositiveFunc: onPositiveFunc,
-      onNegativeFunc: onNegativeFunc,
-      positiveButtonColor: positiveButtonColor,
-      barrierDismissible: barrierDismissible,
-    ).showDialog(context);
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AppDialogDefaultWidget(
+            icon: hasIcon
+                ? SvgPicture.asset('assets/vectors/ic_delete_on_dialog.svg')
+                : null,
+            title: title,
+            hasCloseIcon: hasCloseIcon,
+            subText: subText,
+            subWidget: subWidget,
+            negativeText: negativeText ?? Strings.close,
+            positiveText: positiveText ?? Strings.confirm,
+            onPositiveFunc: onPositiveFunc,
+            onNegativeFunc: onNegativeFunc,
+            positiveButtonColor: positiveButtonColor,
+            barrierDismissible: barrierDismissible,
+          ).showDialog(context);
+        });
   }
 
   static Widget dialogFooter(

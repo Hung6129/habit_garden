@@ -13,3 +13,7 @@ class UpdateHabitProgressEvent extends HabitEvent {
     required this.completed,
   });
 }
+
+class RefreshHabitListEvent extends HabitEvent {
+  RefreshHabitListEvent();
+}

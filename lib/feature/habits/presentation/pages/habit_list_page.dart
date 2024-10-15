@@ -36,7 +36,7 @@ class _HabitListPageState extends State<HabitListPage> {
               if (state.status == GetAllHabitByUserIdEnum.loaded) {
                 return RefreshIndicator(
                   onRefresh: () async {
-                    iS<HabitBloc>().add(GetAllHabitByUserIdEvent());
+                    iS<HabitBloc>().add(RefreshHabitListEvent());
                   },
                   child: ListView.builder(
                     physics: const AlwaysScrollableScrollPhysics(),
@@ -74,45 +74,83 @@ class _HabitListPageState extends State<HabitListPage> {
   _showFormCreateNewHabit(
     BuildContext context,
   ) {
-    return showBottomSheet(
-      backgroundColor: Colors.blue,
-      context: context,
-      builder: (context) {
-        return FormBuilder(
-          key: _formKey,
-          child: SizedBox(
-            height: 400,
-            child: Column(
-              children: <Widget>[
-                AppTextWidget('Create New Habit',
-                    textStyle: Theme.of(context).textTheme.headlineMedium),
-                FormUtils.renderInputField(
-                  context,
-                  key: 'name',
-                  label: 'Habit Name',
-                  hintText: 'Enter habit name',
-                ),
-                GestureDetector(
+    return DialogUtil.onDialogCreateHabit(
+      context,
+      title: 'Create New Habit',
+      onNegativeFunc: () {
+        Navigator.pop(context);
+      },
+      onPositiveFunc: () {
+        if (_formKey.currentState?.saveAndValidate() == true) {
+          debugPrint(_formKey.currentState?.value.toString());
+          // final habit = HabitModel(
+          //   name: _formKey.currentState?.fields['name']?.value,
+          //   description: _formKey.currentState?.fields['description']?.value,
+          //   duration: _formKey.currentState?.fields['duration']?.value,
+          // );
+          // iS<HabitBloc>().add(CreateHabitEvent(habit));
+          // Navigator.pop(context);
+        }
+      },
+      positiveText: 'Create',
+      negativeText: 'Cancel',
+      subWidget: FormBuilder(
+        key: _formKey,
+        child: Column(
+          children: [
+            FormUtils.renderInputField(
+              context,
+              key: 'name',
+              label: 'Name',
+              validator: (value) => ValidatorUtil.requireValidator(value),
+              require: true,
+              hintText: 'Enter habit name',
+            ),
+            SizedBox(
+              height: AppUIConstants.majorScalePadding(8),
+            ),
+            FormUtils.renderInputField(
+              context,
+              key: 'description',
+              validator: (value) => ValidatorUtil.requireValidator(value),
+              require: true,
+              label: 'Description',
+              hintText: 'Enter habit description',
+            ),
+            SizedBox(
+              height: AppUIConstants.majorScalePadding(8),
+            ),
+            FormBuilderField<String?>(
+              name: 'duration',
+              builder: (field) {
+                return InkWell(
                   onTap: () async {
                     var resultingDuration = await showDurationPicker(
                       context: context,
-                      initialTime: Duration(minutes: 30),
+                      initialTime: const Duration(minutes: 30),
                     );
-                    print(resultingDuration);
+                    field.didChange(resultingDuration.toString());
+                    _formKey.currentState?.fields['duration']
+                        ?.didChange(resultingDuration!.inMinutes.toString());
                   },
-                  child: FormUtils.renderInputField(
-                    context,
-                    key: 'duration',
+                  child: AppTextFieldWidget(
+                    isRequired: true,
+                    validator: (value) => ValidatorUtil.requireValidator(value),
                     label: 'Duration',
-                    isViewTextOnly: true,
-                    hintText: 'Select duration',
+                    hintText: 'Enter habit duration',
+                    initValue: field.value,
+                    isDisabled: true,
+                    onChanged: (model) => {},
                   ),
-                ),
-              ],
+                );
+              },
             ),
-          ),
-        );
-      },
+            SizedBox(
+              height: AppUIConstants.majorScalePadding(8),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

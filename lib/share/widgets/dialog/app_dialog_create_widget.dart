@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:habit_garden/core/constants/app_constants.dart';
 import 'package:habit_garden/share/widgets/buttons/app_filled_button_widget.dart';
 import 'package:habit_garden/share/widgets/buttons/app_outlined_button_widget.dart';
 import 'package:habit_garden/share/widgets/texts/app_text_widget.dart';
 
-class AppDialogDefaultWidget {
-  const AppDialogDefaultWidget({
+class AppDialogCreateWidget {
+  const AppDialogCreateWidget({
     required this.title,
-    required this.icon,
     required this.positiveText,
-    this.hasCloseIcon = true,
     this.negativeText,
     this.subText,
     this.subWidget,
@@ -21,8 +18,6 @@ class AppDialogDefaultWidget {
     this.customActions,
   });
 
-  final Widget? icon;
-  final bool? hasCloseIcon;
   final bool? barrierDismissible;
   final String title;
   final String? subText, negativeText;
@@ -30,7 +25,6 @@ class AppDialogDefaultWidget {
   final Widget? subWidget;
   final String positiveText;
   final Color? positiveButtonColor;
-
   final Widget? customActions;
 
   Dialog showDialog(BuildContext context) {
@@ -47,31 +41,6 @@ class AppDialogDefaultWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            hasCloseIcon == true
-                ? Container(
-                    alignment: Alignment.centerRight,
-                    child: InkWell(
-                      onTap: () => Navigator.pop(context),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.close,
-                          color: context.theme.iconTheme.color,
-                        ),
-                      ),
-                    ),
-                  )
-                : Container(),
-            if (icon != null)
-              Container(
-                margin: EdgeInsets.only(
-                  top: hasCloseIcon == true
-                      ? AppUIConstants.majorScalePadding(3)
-                      : 40,
-                  bottom: AppUIConstants.majorScalePadding(3),
-                ),
-                child: icon,
-              ),
             AppTextWidget(
               title,
               textStyle: context.textTheme.titleLarge,

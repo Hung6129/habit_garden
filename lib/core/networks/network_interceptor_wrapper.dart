@@ -20,41 +20,47 @@ class NetworkInterceptorWrapper extends QueuedInterceptorsWrapper {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) async {
     _logger.e('Response: DioError: ${err.response?.data}');
-    // // Go Next when call api login || refreshToken
-    // if (err.requestOptions.path.contains('api/login')) {
-    //   return handler.next(err);
-    // }
-    // // Do something with response error
-    // if (err.response?.statusCode == 401 &&
-    //     err.response?.data['meta']['errorMessages'] == 'jwt expired') {
-    //   // Handle refresh token
-    //   _logger
-    //       .e('Token expired: ${err.response?.data['meta']['errorMessages']}');
-    //   final refreshToken =
-    //       Global.storageServices.getString(AppStorage.refreshToken);
-    //   if (refreshToken.isNotEmpty) {
-    //     final response = await diO.post(
-    //       AppUrls.refreshToken,
-    //       data: {'refresh_token': refreshToken},
-    //       options: Options(
-    //         headers: _basicToken,
-    //       ),
-    //     );
-    //     if (response.statusCode == 200) {
-    //       final token = response.data['token'];
-    //       Global.storageServices.setString(AppStorage.userTokenKey, token);
-    //       return handler.resolve(await diO.fetch(err.requestOptions));
-    //     }
-    //   }
-    //   Get.find<AppService>().forceLogout();
-    // } else {
-    //   return handler.next(err);
-    // }
+    // Go Next when call api login || refreshToken
+    if (err.requestOptions.path.contains('api/login')) {
+      return handler.next(err);
+    }
+    // Do something with response error
+    if (err.response?.statusCode == 401 &&
+        err.response?.data['meta']['errorMessages'] == 'jwt expired') {
+      _logger
+          .e('Token expired: ${err.response?.data['meta']['errorMessages']}');
+      // Handle refresh token
+      final refreshToken =
+          await iS<AppSharedPref>().getValue(AppPrefKey.refreshToken, '');
+      _logger.d('Get old Refresh token: $refreshToken');
+      if (refreshToken.isNotEmpty) {
+        final response = await diO.post(
+          ApiProvider.refreshToken,
+          data: {
+            'refreshToken': refreshToken,
+          },
+          options: Options(
+            headers: _basicToken,
+          ),
+        );
+        if (response.statusCode == 200) {
+          final token = response.data['result']['newAccessToken'];
+          _logger.d('Get new Token: $token');
+          await iS<AppSharedPref>().setValue(AppPrefKey.token, token);
+          return handler.resolve(await diO.fetch(err.requestOptions));
+        }
+      }
+      // Force logout
+      iS<AppServices>().forceLogout();
+    } else {
+      // iS<AppServices>().forceLogout();
+      return handler.next(err);
+    }
   }
 
   Future<Map<String, String>> _headerToken() async {
     final token = await iS<AppSharedPref>().getValue(AppPrefKey.token, '');
-    _logger.d('Token: $token');
+    _logger.d('Header token: $token');
     final tokenHeader =
         token.isEmpty ? _basicToken : {'Authorization': 'Bearer $token'};
     return {

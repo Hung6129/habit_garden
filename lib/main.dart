@@ -21,6 +21,11 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+final GlobalKey<ScaffoldMessengerState> snackbarKey =
+    GlobalKey<ScaffoldMessengerState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -30,7 +35,9 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
+      scaffoldMessengerKey: snackbarKey,
       builder: AppFullScreenLoadingIndicator.init(
         builder: ((context, child) => MediaQuery(
               data:
@@ -49,7 +56,8 @@ class MyApp extends StatelessWidget {
         DurationPickerLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('vi', 'vi_VN'),
+        Locale('vi', 'VN'),
+        Locale('en', 'US'),
       ],
       home: const WalkThroughPage(),
     );

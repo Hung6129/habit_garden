@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:habit_garden/core/data/local/app_shared_pref.dart';
 import 'package:habit_garden/core/networks/network_service.dart';
+import 'package:habit_garden/core/services/app_services.dart';
 
 import 'package:habit_garden/feature/authenticate/data/datasources/authenticate_datasource_remote.dart';
 import 'package:habit_garden/feature/authenticate/data/repositories/authenticate_repository_impl.dart';
@@ -21,7 +22,8 @@ class InjectionService {
   static void registerServices() {
     /// Todo: Register services here
     iS.registerSingleton<AppSharedPref>(AppSharedPrefImpl());
-    iS.registerSingleton<NetworkService>(NetworkServiceImpl());
+    iS.registerLazySingleton<NetworkService>(() => NetworkServiceImpl());
+    iS.registerSingleton<AppServices>(AppServicesImpl());
 
     /// Todo: Register datasources here
     iS.registerLazySingleton<AuthenticateDatasourceRemote>(

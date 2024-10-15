@@ -68,7 +68,7 @@ class AuthenticateBloc extends Bloc<AuthenticateEvent, AuthenticateState> {
   }
 
   saveUserToLocal(UserEntity user, bool isSavePassword) async {
-    _logger.d('Save user info to local storage');
+    _logger.d('Save user info to local storage: $user');
     await iS<AppSharedPref>().setValue(AppPrefKey.userName, user.username);
     await iS<AppSharedPref>().setValue(AppPrefKey.email, user.email);
     await iS<AppSharedPref>().setValue(AppPrefKey.userId, user.id);

@@ -4,6 +4,8 @@ class ApiProvider {
   // Auth
   static String login = "/login";
   static String register = "/register";
+  static String refreshToken = "/refreshToken";
+  
   // End Auth
 
   // Habit
