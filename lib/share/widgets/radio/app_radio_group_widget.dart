@@ -21,8 +21,11 @@ class RadioModel {
     );
   }
 
-  RadioModel(
-      {required this.label, required this.value, this.isSelected = false});
+  RadioModel({
+    required this.label,
+    required this.value,
+    this.isSelected = false,
+  });
 }
 
 class AppRadioGroupWidget extends StatelessWidget {

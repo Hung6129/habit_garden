@@ -34,6 +34,18 @@ class HabitEntity extends Equatable {
     this.updatedAt,
   );
 
+  static const empty = HabitEntity(
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  );
+
   @override
   List<Object?> get props => [
         id,

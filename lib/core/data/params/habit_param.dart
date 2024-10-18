@@ -47,6 +47,11 @@ class HabitCreateParam {
     required this.user,
   });
 
+  @override
+  String toString() {
+    return 'HabitCreateParam(name: $name, description: $description, frequency: $frequency, duration: $duration, priority: $priority, user: $user)';
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'name': name,

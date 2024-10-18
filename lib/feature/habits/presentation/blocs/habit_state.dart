@@ -32,3 +32,29 @@ final class GetAllHabitByUserIdState extends HabitState {
     );
   }
 }
+
+enum CreateHabitEnum { initial, loading, success, error }
+
+final class CreateHabitState extends HabitState {
+  final CreateHabitEnum status;
+  final HabitEntity habit;
+  final String errorMesssage;
+
+  CreateHabitState({
+    this.status = CreateHabitEnum.initial,
+    this.habit = HabitEntity.empty,
+    this.errorMesssage = '',
+  });
+
+  CreateHabitState copyWith({
+    CreateHabitEnum? status,
+    HabitEntity? habit,
+    String? errorMesssage,
+  }) {
+    return CreateHabitState(
+      status: status ?? this.status,
+      habit: habit ?? this.habit,
+      errorMesssage: errorMesssage ?? this.errorMesssage,
+    );
+  }
+}

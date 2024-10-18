@@ -1,3 +1,5 @@
+import 'package:habit_garden/core/data/params/habit_param.dart';
+
 sealed class HabitEvent {}
 
 class GetAllHabitByUserIdEvent extends HabitEvent {
@@ -16,4 +18,12 @@ class UpdateHabitProgressEvent extends HabitEvent {
 
 class RefreshHabitListEvent extends HabitEvent {
   RefreshHabitListEvent();
+}
+
+class CreateHabitEvent extends HabitEvent {
+  final HabitCreateParam habitCreateParam;
+
+  CreateHabitEvent({
+    required this.habitCreateParam,
+  });
 }

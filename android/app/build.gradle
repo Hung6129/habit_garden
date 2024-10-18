@@ -30,6 +30,22 @@ android {
         versionName = flutter.versionName
     }
 
+    productFlavors {
+        dev {
+            dimension "default"
+            applicationIdSuffix ".dev"
+        }
+
+        staging {
+            dimension "default"
+            applicationIdSuffix ".staging"
+        }
+        prod {
+            dimension "default"
+            applicationIdSuffix "com.habitgarden.ihun.habit_garden"
+        }
+    }
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.

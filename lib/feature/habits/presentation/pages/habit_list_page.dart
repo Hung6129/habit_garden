@@ -11,6 +11,11 @@ class _HabitListPageState extends State<HabitListPage> {
   final _formKey = GlobalKey<FormBuilderState>();
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => iS<HabitBloc>()..add(GetAllHabitByUserIdEvent()),
@@ -26,7 +31,14 @@ class _HabitListPageState extends State<HabitListPage> {
             iS<HabitBloc>().add(GetAllHabitByUserIdEvent());
           },
           child: BlocConsumer<HabitBloc, HabitState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              if (state is CreateHabitState) {
+                if (state.status == CreateHabitEnum.success) {
+                  iS<HabitBloc>().add(GetAllHabitByUserIdEvent());
+                  Navigator.pop(context);
+                }
+              }
+            },
             builder: (context, state) {
               if (state is GetAllHabitByUserIdState) {
                 if (state.status == GetAllHabitByUserIdEnum.loading) {
@@ -74,9 +86,7 @@ class _HabitListPageState extends State<HabitListPage> {
     RadioModel(label: 'High', value: 'High', isSelected: true),
   ];
 
-  _showFormCreateNewHabit(
-    BuildContext context,
-  ) {
+  _showFormCreateNewHabit(BuildContext context) {
     return DialogUtil.onDialogCreateHabit(
       context,
       barrierDismissible: false,
@@ -84,16 +94,21 @@ class _HabitListPageState extends State<HabitListPage> {
       onNegativeFunc: () {
         Navigator.pop(context);
       },
-      onPositiveFunc: () {
+      onPositiveFunc: () async {
         if (_formKey.currentState?.saveAndValidate() == true) {
           debugPrint(_formKey.currentState?.value.toString());
-          // final habit = HabitModel(
-          //   name: _formKey.currentState?.fields['name']?.value,
-          //   description: _formKey.currentState?.fields['description']?.value,
-          //   duration: _formKey.currentState?.fields['duration']?.value,
-          // );
-          // iS<HabitBloc>().add(CreateHabitEvent(habit));
-          // Navigator.pop(context);
+          final habit = HabitCreateParam(
+            user: await iS<AppSharedPref>().getValue(AppPrefKey.userId, ''),
+            priority:
+                _formKey.currentState?.fields['priority']?.value ?? 'HIGH',
+            frequency: _formKey.currentState?.fields['frequency']?.value,
+            name: _formKey.currentState?.fields['name']?.value,
+            description: _formKey.currentState?.fields['description']?.value,
+            duration: _formKey.currentState?.fields['duration']?.value,
+          );
+
+          iS<HabitBloc>().add(CreateHabitEvent(habitCreateParam: habit));
+          Navigator.pop(context);
         }
       },
       positiveText: 'Create',
@@ -124,6 +139,17 @@ class _HabitListPageState extends State<HabitListPage> {
             SizedBox(
               height: AppUIConstants.majorScalePadding(8),
             ),
+            FormUtils.renderInputField(
+              context,
+              key: 'frequency',
+              validator: (value) => ValidatorUtil.requireValidator(value),
+              require: true,
+              label: 'Frequency',
+              hintText: 'Enter habit frequency',
+            ),
+            SizedBox(
+              height: AppUIConstants.majorScalePadding(8),
+            ),
             FormBuilderField<String?>(
               name: 'duration',
               builder: (field) {
@@ -135,18 +161,34 @@ class _HabitListPageState extends State<HabitListPage> {
                           ? Duration(minutes: int.parse(field.value!))
                           : const Duration(minutes: 30),
                     );
-                    field.didChange(resultingDuration.toString());
+                    // if user pick duration more than 60 minutes
+                    // show it in hours, eles show in minutes
+
+                    field.didChange(
+                      field.value != null
+                          ? resultingDuration != null
+                              ? resultingDuration.inMinutes.toString()
+                              : field.value
+                          : const Duration(minutes: 30).inMinutes.toString(),
+                    );
+
                     _formKey.currentState?.fields['duration']
-                        ?.didChange(resultingDuration!.inMinutes.toString());
+                        ?.didChange(field.value != null
+                            ? resultingDuration != null
+                                ? resultingDuration.inMinutes.toString()
+                                : field.value
+                            : const Duration(minutes: 30).inMinutes.toString());
+                    setState(() {});
                   },
                   child: AppTextFieldWidget(
                     isRequired: true,
                     validator: (value) => ValidatorUtil.requireValidator(value),
                     label: 'Duration',
                     hintText: 'Enter habit duration',
-                    initValue: field.value,
-                    suffixIcon: const AppTextWidget('Minutes'),
-                    suffixIconConstraints: const BoxConstraints(minWidth: 80),
+                    initValue: field.value ??
+                        "${const Duration(minutes: 30).inMinutes.toString()} phút",
+                    suffixIcon: const AppIconWidget(Icons.timer, iconSize: 25),
+                    suffixIconConstraints: const BoxConstraints(minWidth: 50),
                     isDisabled: true,
                     onChanged: (model) => {},
                   ),
